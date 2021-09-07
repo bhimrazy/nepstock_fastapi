@@ -6,8 +6,23 @@ from bs4 import BeautifulSoup
 from urllib.request import urlopen
 from urllib.error import HTTPError
 from urllib.error import URLError
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
+
+origins = [
+    "https://3000-red-hawk-mejx9fql.ws-eu15.gitpod.io",
+    "https://nepstock.vercel.app"
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 
 
 @app.get("/")
