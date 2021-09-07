@@ -41,6 +41,7 @@ def api():
     else:
         print('It Worked!')
     bs = BeautifulSoup(html.read(), 'html.parser')
+    index = bs.find('div', {'class':{'current-index'}}).text.split()[0]
     tables = bs.find_all('table', {'class':{'table table-hover table-condensed'}})[3:]
     alldata=[]
     for table in tables:
@@ -64,5 +65,8 @@ def api():
         t["body"]=row_data 
         alldata.append(t)    
     return {
-        "data": alldata
+        "data": {
+            "records":alldata,
+            "index":index
+        }
     }
