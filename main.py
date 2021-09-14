@@ -1,14 +1,15 @@
-from typing import Optional
-
-from fastapi import FastAPI
-# others
-from bs4 import BeautifulSoup
-from urllib.request import urlopen
-from urllib.error import HTTPError
-from urllib.error import URLError
+# from deta import app as App
+from fastapi import Depends, FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from nepstock import crawler
+from routers.api import write_data_to_db
+from routers import api
 
+
+# app = App(FastAPI())
 app = FastAPI()
+
+app.include_router(api.router)
 
 origins = [
     "https://3000-red-hawk-mejx9fql.ws-eu15.gitpod.io",
@@ -29,48 +30,11 @@ app.add_middleware(
 def read_root():
     return {"Hello": "World"}
 
-@app.get("/test")
-def test():
-    return {"Hello": "Test"}
 
 
-@app.get("/api/nepstock")
-def api():
-    try:
-        html = urlopen('http://www.nepalstock.com')
-    except HTTPError as e:
-        print(e)
-    except URLError as e:
-        print('The server could not be found!')
-    else:
-        print('It Worked!')
-    bs = BeautifulSoup(html.read(), 'html.parser')
-    index = bs.find('div', {'class':{'current-index'}}).text.split()[0]
-    tables = bs.find_all('table', {'class':{'table table-hover table-condensed'}})[3:]
-    alldata=[]
-    for table in tables:
-        t={}
-        for row in table.find("thead").findAll('tr'):
-            t["head"]=[data.text for data in row.find_all('td') if data.text !='']
-            
-        row_data=[]
-        for row in table.find("tbody").findAll('tr'):
-            col_data=[]
-            for data in row.find_all('td'):
-                text=data.text.split()
-                if len(text) ==1 and text[0]!='' :
-                    col_data.append(text[0])
-                if len(text) >1:
-                    col_data.append(' '.join(text))
-                if len(col_data) >1:
-                    row_data.append(col_data)   
-            
+# @app.lib.cron()
+# def cron_job(event):
+#     alldata, index = crawler.crawler()
+#     write_data_to_db(index, alldata) 
+#     return "Data Written Successfully"
 
-        t["body"]=row_data 
-        alldata.append(t)    
-    return {
-        "data": {
-            "records":alldata,
-            "index":index
-        }
-    }
