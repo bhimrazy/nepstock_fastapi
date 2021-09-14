@@ -29,6 +29,10 @@ app.add_middleware(
 def read_root():
     return {"Hello": "World"}
 
+@app.get("/test")
+def read_root():
+    return {"Hello": "Test"}
+
 
 @app.get("/api/nepstock")
 def api():
