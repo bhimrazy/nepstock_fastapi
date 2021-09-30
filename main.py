@@ -1,13 +1,12 @@
-from deta import App
+# from deta import App
 from fastapi import Depends, FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from nepstock import crawler
 from routers.api import write_data_to_db
 from routers import api
 
-
-app = App(FastAPI())
-# app = FastAPI()
+# app = App(FastAPI())
+app = FastAPI()
 
 app.include_router(api.router)
 
@@ -28,14 +27,14 @@ app.add_middleware(
 
 @app.get("/")
 def read_root():
-    return {"Hello": "World"}
+    return {"message": "Hello World"}
 
 
 
-@app.lib.cron()
-def cron_job(event):
-    alldata, index = crawler.crawler()
-    write_data_to_db(index, alldata) 
-    return f"Data Written Successfully with index: {index} "
+# @app.lib.cron()
+# def cron_job(event):
+#     alldata, index = crawler.crawler()
+#     write_data_to_db(index, alldata) 
+#     return f"Data Written Successfully with index: {index} "
 
 #  deta cron set "0/1 9-15 ? * 1-5 *"

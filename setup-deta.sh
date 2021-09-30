@@ -23,3 +23,5 @@ echo "***** Exporting Token *****"
 export DETA_ACCESS_TOKEN=$ACCESS_TOKEN
 
 echo "***** Completed *****"
+
+export PYTHONPATH="$PYTHONPATH:$HOME/.python"
