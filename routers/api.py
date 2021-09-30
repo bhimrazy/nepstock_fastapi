@@ -8,7 +8,7 @@ router = APIRouter(
     tags=["api"]
 )
 
-deta = Deta("c0icbcyf_eHHwWcguNAfuoDaSnEZxVqtxsfNvojzA")  # configure your Deta project
+deta = Deta("c0icbcyf_QaF3eiMteBeBrQTjPhu6GvPhoMGc13C6")  # configure your Deta project
 db = deta.Base('nepstock_db')
 
 def write_data_to_db(index, alldata):

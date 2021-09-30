@@ -36,5 +36,6 @@ def read_root():
 def cron_job(event):
     alldata, index = crawler.crawler()
     write_data_to_db(index, alldata) 
-    return f"Data Written Successfully with index: {index}"
+    return f"Data Written Successfully with index: {index} "
 
+#  deta cron set "0/1 9-15 ? * 1-5 *"
