@@ -2,7 +2,7 @@ name: Deploy to Deta
 on: push
 
 jobs:
-  deploy:
+  deploy_main_app:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2 #Be sure you check-out the repo first. Deta CLI needs access to the files
@@ -11,7 +11,7 @@ jobs:
           deta-access-token: ${{ secrets.DETA_TOKEN }} #Deta access token https://docs.deta.sh/docs/cli/auth
           deta-name: 'nepstock' #Deta Micro name https://docs.deta.sh/docs/cli/commands/#deta-clone
           deta-project-dir: 'app'
-  deploy-cron:
+  deploy-cron_app:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2 #Be sure you check-out the repo first. Deta CLI needs access to the files
