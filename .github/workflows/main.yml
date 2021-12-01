@@ -11,6 +11,15 @@ jobs:
           deta-access-token: ${{ secrets.DETA_TOKEN }} #Deta access token https://docs.deta.sh/docs/cli/auth
           deta-name: 'app' #Deta Micro name https://docs.deta.sh/docs/cli/commands/#deta-clone
           deta-project-dir: 'app'
+  deploy_nepstock_app:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2 #Be sure you check-out the repo first. Deta CLI needs access to the files
+      - uses: BogDAAAMN/deta-deploy-action@v1.0.1
+        with:
+          deta-access-token: ${{ secrets.DETA_TOKEN }} #Deta access token https://docs.deta.sh/docs/cli/auth
+          deta-name: 'nepstock' #Deta Micro name https://docs.deta.sh/docs/cli/commands/#deta-clone
+          deta-project-dir: 'app'
   deploy_cron_app:
     runs-on: ubuntu-latest
     steps:
