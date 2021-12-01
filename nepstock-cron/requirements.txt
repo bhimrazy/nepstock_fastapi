@@ -1,0 +1,4 @@
+fastapi
+pytz
+beautifulsoup4
+deta

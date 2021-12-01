@@ -33,7 +33,7 @@ class Item(BaseModel):
 
 
 @router.get("/nepstock")
-async def nepstock(background_tasks: BackgroundTasks):
+async def get_nepse_market_summary(background_tasks: BackgroundTasks):
     """This function returns scraped data"""
     alldata, index = crawler.crawler()
     background_tasks.add_task(write_data_to_db, index, alldata)
