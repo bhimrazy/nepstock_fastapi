@@ -1,9 +1,10 @@
 import time
-from typing import Optional
-from fastapi import APIRouter, BackgroundTasks
-from pydantic import BaseModel
 from deta import Deta
-from app.nepstock import crawler
+from typing import Optional
+from nepstock import crawler
+from pydantic import BaseModel
+from fastapi import APIRouter, BackgroundTasks
+
 
 router = APIRouter(
     prefix="/api",

@@ -2,7 +2,8 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 # from app.routers.api import write_data_to_db
 
-from app.routers import api
+# from app.routers import api
+from routers import api
 
 app = FastAPI()
 
