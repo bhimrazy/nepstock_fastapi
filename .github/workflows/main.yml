@@ -10,7 +10,6 @@ jobs:
         with:
           deta-access-token: ${{ secrets.DETA_TOKEN }} #Deta access token https://docs.deta.sh/docs/cli/auth
           deta-name: 'nepstock' #Deta Micro name https://docs.deta.sh/docs/cli/commands/#deta-clone
-          deta-project: 'default' #Optional: Deta project name https://docs.deta.sh/docs/cli/commands/#deta-clone
   deploy-cron:
     runs-on: ubuntu-latest
     steps:
@@ -19,4 +18,4 @@ jobs:
         with:
           deta-access-token: ${{ secrets.DETA_TOKEN }} #Deta access token https://docs.deta.sh/docs/cli/auth
           deta-name: 'nepstock-cron' #Deta Micro name https://docs.deta.sh/docs/cli/commands/#deta-clone
-          deta-project: 'default' #Optional: Deta project name https://docs.deta.sh/docs/cli/commands/#deta-clone
+
