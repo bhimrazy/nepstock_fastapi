@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from utils import get_market_info,get_share_info
+from utils import get_market_info,get_share_info,get_db_market_info
 from deta import App
 
 
@@ -15,6 +15,12 @@ def root():
 @app.get("/market-info",tags=["Market"])
 def get_market_data(e = None):
     return get_market_info()
+
+
+@app.lib.run()
+@app.get("/db-market-info",tags=["Market"])
+def get_market_data_from_db(e = None):
+    return get_db_market_info()
 
 @app.lib.run()
 @app.get("/share-info",tags=["Share"])

@@ -17,7 +17,7 @@ deta = Deta("c0icbcyf_QaF3eiMteBeBrQTjPhu6GvPhoMGc13C6")
 drive_mi = deta.Drive("market_info")  # access to your market_info drive
 drive_si = deta.Drive("share_info")  # access to your share_info drive
 db = deta.Base('market_info')
-
+tz = pytz.timezone("Asia/Kathmandu")
 
 class Market(Enum):
     OPEN: str = "Market Open"
@@ -118,7 +118,6 @@ def share_price_crawler(upload: bool = False):
         share_data += ','.join(r.values()) + '\n'
         t_body.append(r)
     if upload:
-        tz = pytz.timezone("Asia/Kathmandu")
         file_name = 'share_data_' + \
             datetime.datetime.now(tz).strftime("%Y_%m_%d-%I_%M_%S_%p")+'.csv'
         drive_si.put(file_name, share_data)
@@ -127,17 +126,22 @@ def share_price_crawler(upload: bool = False):
 
 
 def get_market_info(upload=False):
-    crawler_data = crawler()
+    crawler_data = {k:json.dumps(v) if type(v) is not str else v for k,v in crawler().items()}
     market_open = crawler_data["market_status"] == Market.OPEN
-    if upload and market_open:
+    if upload and not market_open:
         db.put({
             "index": crawler_data['NEPSE_INDEX'],
-            "records": json.dumps(crawler_data),
-            "created_at": time.ctime(time.time())
+            # "records": json.dumps(crawler_data),
+            **crawler_data,
+            "created_at": datetime.datetime.now(tz).strftime("%m/%d/%Y %I:%M:%S %p") #12/3/2021 03:26 PM
         })
         print("Data Written to database")
     return crawler_data
 
+def get_db_market_info():
+    return db.fetch()
 
 def get_share_info(upload=False):
     return share_price_crawler(upload)
+
+# deta cron set "0/2 8-17 ? * SUN-FRI *"
