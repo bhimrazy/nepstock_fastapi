@@ -130,8 +130,6 @@ def get_market_info(upload=False):
     market_open = crawler_data["market_status"] == Market.OPEN
     if upload and market_open:
         db.put({
-            "index": crawler_data['NEPSE_INDEX'],
-            # "records": json.dumps(crawler_data),
             **crawler_data,
             "created_at": datetime.datetime.now(tz).strftime("%m/%d/%Y %I:%M:%S %p") #12/3/2021 03:26 PM
         })
