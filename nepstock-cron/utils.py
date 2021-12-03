@@ -128,7 +128,7 @@ def share_price_crawler(upload: bool = False):
 def get_market_info(upload=False):
     crawler_data = {k:json.dumps(v) if type(v) is not str else v for k,v in crawler().items()}
     market_open = crawler_data["market_status"] == Market.OPEN
-    if upload and not market_open:
+    if upload and market_open:
         db.put({
             "index": crawler_data['NEPSE_INDEX'],
             # "records": json.dumps(crawler_data),
