@@ -1,7 +1,7 @@
 import time
 from deta import Deta
 from typing import Optional
-from nepstock import crawler
+from app.nepstock import crawler
 from pydantic import BaseModel
 from fastapi import APIRouter, BackgroundTasks
 
@@ -37,7 +37,7 @@ class Item(BaseModel):
 async def get_nepse_market_summary(background_tasks: BackgroundTasks):
     """This function returns scraped data"""
     alldata, index = crawler.crawler()
-    background_tasks.add_task(write_data_to_db, index, alldata)
+    # background_tasks.add_task(write_data_to_db, index, alldata)
     return {
         "data": {
             "index": index,
